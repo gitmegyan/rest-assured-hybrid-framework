@@ -1,0 +1,50 @@
+- testcaseId: TC_001
+  storyId:  JIRA_001
+  testcaseDescription: Create User
+  priority: P0
+  testcaseType:
+    - REGRESSION
+    - SMOKE
+  expectedResult: api should return 201 response
+  requestSpec:
+    uri: /api/users
+    method: POST
+    requestBody:
+      {
+        "name":"morpheus",
+       "job":"leader"
+      }
+  validation:
+    responseValidation:
+      statusCode: 201
+      body: >
+        {
+            "name": "morpheus",
+            "job": "leader",
+            "id": "$notnull"   
+        }
+    schemaValidation: {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "job": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "job",
+        "id",
+        "createdAt"
+      ]
+    }
+
