@@ -18,8 +18,7 @@ public class RestAssuredClient {
         this.headers = Map.of("content-type", "application/json", "x-api-key", "reqres-free-v1");
         this.requestSpecification = RestAssured
                 .given()
-                .log()
-                .all()
+                .filter(new CurlGenerator())
                 .baseUri(ApiConstants.REGRES_CLIENT)
                 .headers(headers);
 
