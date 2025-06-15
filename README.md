@@ -1,12 +1,20 @@
 # 🚀 API Test Automation Framework
 
-This is a modular and extensible REST API test automation framework built using:
+API Test Automation Framework
 
-- **Rest Assured** for API testing
-- **TestNG** for test orchestration
-- **Extent Reports** for rich HTML reporting
-- **Jackson + SnakeYAML** for reading test data from `.yaml` files
-- **Maven** for build and dependency management
+This project is a zero-code API test automation framework that leverages YAML to define test cases and supports advanced validations.
+
+✨ Key Features
+1.	Data-driven Testing using YAML
+•	Test cases are written entirely in YAML files, making the framework easily extensible and human-readable.
+•	No need to write Java code to add or update test cases.
+2.	No-Code Automation
+•	Users can simply define the test case details such as URI, method, headers, body, and validations in a structured YAML format.
+•	The framework parses and executes all test logic using Java under the hood.
+3.	Comprehensive Validation Support
+•	Schema Validation: Uses JSON Schema Draft-04 to validate response structure and types.
+•	Response Validation with Placeholders: Validates response using JsonNode, supporting smart assertions like $notnull to check for dynamically generated fields.
+
 
 ## 📁 Project Structure
 
