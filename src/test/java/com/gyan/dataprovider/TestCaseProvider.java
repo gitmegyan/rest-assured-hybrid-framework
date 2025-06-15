@@ -24,7 +24,7 @@ public class TestCaseProvider {
     private final String TEST_CASE_PATH = "src/test/resources/testcases/";
     private FileReader fileReader = new YamlFileReader();
 
-    @DataProvider
+    @DataProvider(parallel = true)
     public Object[][] testcaseProvider() {
         final List<File> list = readAllTestcaseFileInADirectory();
         final Map<String, TestDataModel> testcaseMap = new HashMap<>();

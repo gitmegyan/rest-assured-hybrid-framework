@@ -12,13 +12,22 @@ import com.gyan.validator.Validator;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.ResponseSpecification;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestSuite {
+    private  RestAssuredClient restAssuredClient;
+    private Validator jsonSchemaValidator;
+    private Validator responseValidator;
 
-    private final RestAssuredClient restAssuredClient = new RestAssuredClient();
-    Validator jsonSchemaValidator = new JsonSchemaValidator();
-    Validator responseValidator = new ResponseValidator();
+    @BeforeMethod
+    public void setUp() {
+        restAssuredClient = new RestAssuredClient();
+        jsonSchemaValidator = new JsonSchemaValidator();
+        responseValidator =  new ResponseValidator();
+    }
+
+
 
 
     @Test(dataProviderClass = TestCaseProvider.class, dataProvider = "testcaseProvider")

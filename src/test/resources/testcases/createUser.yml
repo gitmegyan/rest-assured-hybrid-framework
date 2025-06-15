@@ -48,3 +48,47 @@
       ]
     }
 
+- testcaseId: TC_003
+  storyId:  JIRA_003
+  testcaseDescription: Update User
+  priority: P0
+  testcaseType:
+    - REGRESSION
+  expectedResult: api should return 200 response
+  requestSpec:
+    uri: /api/users/2
+    method: PUT
+    requestBody:
+      {
+        "name":"morpheus",
+        "job":"zion resident"
+      }
+  validation:
+    responseValidation:
+      statusCode: 200
+      body: >
+        {
+            "name": "morpheus",
+            "job": "zion resident",
+            "updatedAt": "$notnull"   
+        }
+    schemaValidation:
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "job": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "job"
+        ]
+      }

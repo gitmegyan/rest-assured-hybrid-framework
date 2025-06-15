@@ -10,6 +10,9 @@ import io.restassured.specification.FilterableResponseSpecification;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.gyan.listeaners.ExtentReportLogger.logError;
+import static com.gyan.listeaners.ExtentReportLogger.logInfo;
+
 public class CurlGenerator implements Filter {
     public Response filter(FilterableRequestSpecification requestSpecification,
                            FilterableResponseSpecification filterableResponseSpecification,
@@ -34,7 +37,7 @@ public class CurlGenerator implements Filter {
         }
         curl.append(" \"")
                 .append(requestSpecification.getURI()).append("\"");
-        System.out.println("Generated cURL: \n" + curl);
+        logInfo("Generated cURL: \n" + curl);
 
         return filterContext.next(requestSpecification, filterableResponseSpecification);
     }

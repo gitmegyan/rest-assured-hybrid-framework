@@ -10,83 +10,76 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class RestAssuredClient {
-    private RequestSpecification requestSpecification;
-    private Map<String, String> headers;
+public final class RestAssuredClient {
 
-    public RestAssuredClient() {
-        this.headers = Map.of("content-type", "application/json", "x-api-key", "reqres-free-v1");
-        this.requestSpecification = RestAssured
+    public Response execute(RequestSpec requestSpec) {
+        RequestSpecification requestSpecification = RestAssured
                 .given()
                 .filter(new CurlGenerator())
                 .baseUri(ApiConstants.REGRES_CLIENT)
-                .headers(headers);
-
-    }
-
-    public Response execute(RequestSpec requestSpec) {
-        addPathParams(requestSpec.getPathParam());
-        addBasePath(requestSpec.getUri());
-        addQueryParams(requestSpec.getQueryParam());
-        addBody(requestSpec.getRequestBody());
+                .headers( Map.of("content-type", "application/json", "x-api-key", "reqres-free-v1"));
+        addPathParams(requestSpec.getPathParam(), requestSpecification);
+        addBasePath(requestSpec.getUri(), requestSpecification);
+        addQueryParams(requestSpec.getQueryParam(), requestSpecification);
+        addBody(requestSpec.getRequestBody(), requestSpecification);
         switch (requestSpec.getMethod()) {
             case GET -> {
-               return this.get(requestSpec);
+               return this.get(requestSpecification);
             }
             case POST -> {
-                return this.post(requestSpec);
+                return this.post(requestSpecification);
             }
             case PUT -> {
-                return this.put(requestSpec);
+                return this.put(requestSpecification);
             }
             default ->
                 throw new RuntimeException("The specified method is not currently supported in this framework");
         }
     }
 
-    private Response post(RequestSpec requestSpec) {
-        return this.requestSpecification
+    private Response post(RequestSpecification requestSpec) {
+        return requestSpec
                 .post();
     }
 
-    private Response get(RequestSpec requestSpec) {
-        return this.requestSpecification
+    private Response get(RequestSpecification requestSpec) {
+        return requestSpec
                 .get();
     }
 
-    private Response put(RequestSpec requestSpec) {
-        return this.requestSpecification
-                .post();
+    private Response put(RequestSpecification requestSpec) {
+        return  requestSpec
+                .put();
     }
 
-    private void addBody(Object body) {
+    private void addBody(Object body, RequestSpecification requestSpec) {
         if(Objects.nonNull(body)) {
-            requestSpecification.body(body);
+            requestSpec.body(body);
         }
     }
 
-    private void addQueryParams(Map<String, Object> queryParams) {
+    private void addQueryParams(Map<String, Object> queryParams, RequestSpecification requestSpec) {
             if(Objects.nonNull(queryParams)) {
-                requestSpecification.queryParams(queryParams);
+                requestSpec.queryParams(queryParams);
             }
 
     }
 
-    private void addBasePath(String basePath) {
+    private void addBasePath(String basePath, RequestSpecification requestSpec ) {
         if(Objects.nonNull(basePath)) {
-            requestSpecification.basePath(basePath);
+            requestSpec.basePath(basePath);
         }
     }
 
-    private void addPathParams(Map<String, String> pathParam) {
+    private void addPathParams(Map<String, String> pathParam, RequestSpecification requestSpec) {
         if(Objects.nonNull(pathParam)) {
-            requestSpecification.pathParams(pathParam);
+            requestSpec.pathParams(pathParam);
         }
     }
 
-    private void addHeaders(Map<String, String> headers) {
+    private void addHeaders(Map<String, String> headers, RequestSpecification requestSpec) {
         if(Objects.nonNull(headers)) {
-            requestSpecification.headers(headers);
+            requestSpec.headers(headers);
         }
     }
 }
